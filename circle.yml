@@ -1,0 +1,25 @@
+machine:
+    pre:
+        - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+        - pip install --upgrade pip
+        - pip install docker-compose
+    services:
+        - docker
+
+dependencies:
+    cache_directories:
+        - "~/.composer"
+    override:
+        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+        - docker pull e96tech/search-elastic:$CIRCLE_BRANCH || true
+        - docker build --rm=false -t e96tech/search-elastic:$CIRCLE_BRANCH docker/elasticsearch
+
+test:
+    override:
+        - /bin/true
+
+deployment:
+    hub:
+        branch: /.*/
+        commands:
+            - docker push e96tech/search-elastic:$CIRCLE_BRANCH
