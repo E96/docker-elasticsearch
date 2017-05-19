@@ -2,7 +2,7 @@ version: '2'
 
 services:
   elasticsearch:
-    image: e96tech/elasticsearch:${REVISION:-latest}
+    image: e96tech/elasticsearch:master
     container_name: search-elastic
     environment:
       - cluster.name=search
