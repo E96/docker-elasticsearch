@@ -87,6 +87,6 @@ discovery.zen.minimum_master_nodes: 1
 #
 #action.destructive_requires_name: true
 
-bootstrap.memory_lock: false
+bootstrap.memory_lock: true
 bootstrap.system_call_filter: false
 transport.host: localhost
